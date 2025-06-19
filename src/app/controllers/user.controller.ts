@@ -1,12 +1,15 @@
 import express, { Request, Response } from "express";
 import { User } from "../models/user.model";
+import { userZodSchema } from "../zodSchemas/user.zodSchema";
 
 
 export const userRouter = express.Router();
 
 // creating a user
 userRouter.post("/create-user", async (req: Request, res: Response) => {
-  const body = req.body;
+  const body = await userZodSchema.parseAsync(req.body);
+  // const body = userZodSchema.parse(req.body);
+  console.log(body);
   const user = await User.create(body);
 
   res.status(201).send({
