@@ -2,7 +2,7 @@ import { model, Schema } from "mongoose";
 import { IUser } from "../interfaces/user.interface";
 
 const userSchema = new Schema<IUser>({
-    firstName: { type: String, required: true, trim: true },
+    firstName: { type: String, required: true, trim: true , minlength: [2, 'First name must be at least 2 characters long, got {VALUE}'] },
     lastName: { type: String, required: true, trim: true },
     email: { type: String, required: true, unique: true , trim: true },
     password: { type: String, required: true },
