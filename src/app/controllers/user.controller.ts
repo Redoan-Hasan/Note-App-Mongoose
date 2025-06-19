@@ -19,7 +19,7 @@ userRouter.post("/create-user", async (req: Request, res: Response) => {
 userRouter.get("/get-users", async (req: Request, res: Response) => {
   const users = await User.find();
   res.status(200).send({
-    message: "Users fetched successfully",
+    message: "Users retrieved successfully",
     users,
   });
 });
