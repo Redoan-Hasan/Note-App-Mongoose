@@ -22,7 +22,7 @@ notesRouter.post("/create-note", async (req: Request, res: Response) => {
 
 // getting all notes
 notesRouter.get("/get-notes", async (req: Request, res: Response) => {
-  const notes = await Note.find();
+  const notes = await Note.find().populate("user");
   res.status(200).send({
     message: "Notes fetched successfully",
     notes,
@@ -32,7 +32,7 @@ notesRouter.get("/get-notes", async (req: Request, res: Response) => {
 // getting a single note
 notesRouter.get("/:id", async (req: Request, res: Response) => {
   const { id } = req.params;
-  const note = await Note.findById(id); //if you wanna use another field like title or _id directy you can do that with findOne({title: "title"}) or findOne({_id: "id"}) findById is shorthand for findOne({_id: "id"})
+  const note = await Note.findById(id).populate("user"); //if you wanna use another field like title or _id directy you can do that with findOne({title: "title"}) or findOne({_id: "id"}) findById is shorthand for findOne({_id: "id"})
 
   res.status(200).send({
     message: "Note fetched successfully",

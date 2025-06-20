@@ -1,6 +1,13 @@
 import { model, Schema } from "mongoose";
-import { IUser } from "../interfaces/user.interface";
+import { IAddress, IUser } from "../interfaces/user.interface";
 import validator from "validator";
+
+const addressSchema = new Schema<IAddress>({
+    city: { type: String, required: [true, 'City is required'], trim: true },
+    country: { type: String, required: [true, 'Country is required'], trim: true }
+}, {_id: false, versionKey: false });
+
+
 const userSchema = new Schema<IUser>({
     firstName: { type: String, required:[ true, 'First name is required' ], trim: true , minlength: [2, 'First name must be at least 2 characters long, got {VALUE}'] },
     lastName: { type: String, required: true, trim: true, minlength:3,
@@ -23,7 +30,8 @@ const userSchema = new Schema<IUser>({
             message: '{VALUE} is not a valid role'
         },
         default: 'user'
-    }
+    },
+    address: { type: addressSchema, required: true }
 }, {
     versionKey: false,
     timestamps: true
